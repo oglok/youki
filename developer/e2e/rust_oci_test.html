@@ -15,8 +15,8 @@
         <link rel="icon" href="../../favicon-de23e50b.svg">
         <link rel="shortcut icon" href="../../favicon-8114d1fc.png">
         <link rel="stylesheet" href="../../css/variables-8adf115d.css">
-        <link rel="stylesheet" href="../../css/general-2459343d.css">
-        <link rel="stylesheet" href="../../css/chrome-ae938929.css">
+        <link rel="stylesheet" href="../../css/general-e96d0476.css">
+        <link rel="stylesheet" href="../../css/chrome-d279d366.css">
         <link rel="stylesheet" href="../../css/print-9e4910d8.css" media="print">
 
         <!-- Fonts -->
@@ -35,10 +35,10 @@
             const path_to_root = "../../";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "../../searchindex-9d24c0f4.js";
+            window.path_to_searchindex_js = "../../searchindex-7dfe7b7f.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc-c02ff5a4.js"></script>
+        <script src="../../toc-9d7079ca.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -176,7 +176,7 @@
                     <main>
                         <h1 id="contest"><a class="header" href="#contest">Contest</a></h1>
 <p>This is youki’s original integration to verify the behavior of the low-level container runtime.</p>
-<p><img src="../../assets/rust_oci_tests.png" alt="Overview"></p>
+<p><label class="checkbox-label"><input class="checkbox-img" type="checkbox"><img src="../../assets/rust_oci_tests.png" alt="Overview"><span class="img-wrapper"><img src="../../assets/rust_oci_tests.png" alt="Overview"></span></label></p>
 <h1 id="how-to-run"><a class="header" href="#how-to-run">How to run</a></h1>
 <pre><code class="language-console">just test-contest
 </code></pre>
@@ -225,6 +225,8 @@ pub fn get_example_test() -&gt; TestGroup {
 
     test_group
 }
+
+test_framework::register_test_group!(get_example_test);
 ////////// ANCHOR_END: get_example_test</code></pre>
 </p>
 
@@ -260,7 +262,7 @@ Therefore, it is common practice here to write an OCI Runtime Spec that executes
     test_inside_container(&amp;spec, &amp;CreateOptions::default(), &amp;|_| Ok(()))
 }</code></pre>
 <ol start="3">
-<li>Create a <code>TestGroup</code> and register a test case you created</li>
+<li>Create a <code>TestGroup</code>, add the test case you created to it, and register the <code>TestGroup</code> with <code>test_framework::register_test_group!</code>. The macro takes the function (or <code>Type::new</code>) that builds the group, and goes next to that function.</li>
 </ol>
 <pre><code class="language-rust no_run noplayground">pub fn get_example_test() -&gt; TestGroup {
     let mut test_group = TestGroup::new("example");
@@ -268,13 +270,14 @@ Therefore, it is common practice here to write an OCI Runtime Spec that executes
     test_group.add(vec![Box::new(test1)]);
 
     test_group
-}</code></pre>
+}
+
+test_framework::register_test_group!(get_example_test);</code></pre>
 <ol start="4">
-<li>Register the <code>TestGroup</code> you created to a <code>TestManager</code></li>
+<li><code>main.rs</code> collects every registered group into the <code>TestManager</code>. Each group needs a unique name: contest panics at startup if two groups share one.</li>
 </ol>
 <pre><code class="language-rust no_run noplayground">    let mut tm = TestManager::new();
-    let example = get_example_test();
-    tm.add_test_group(Box::new(example));</code></pre>
+    tm.add_registered_test_groups();</code></pre>
 <ol start="5">
 <li>Write the validation you want to run within a test container</li>
 </ol>
@@ -336,11 +339,11 @@ Therefore, it is common practice here to write an OCI Runtime Spec that executes
 
         <script src="../../elasticlunr-ef4e11c1.min.js"></script>
         <script src="../../mark-09e88c2c.min.js"></script>
-        <script src="../../searcher-c2a407aa.js"></script>
+        <script src="../../searcher-09f2665d.js"></script>
 
         <script src="../../clipboard-1626706a.min.js"></script>
         <script src="../../highlight-abc7f01d.js"></script>
-        <script src="../../book-a0b12cfe.js"></script>
+        <script src="../../book-609e4cb8.js"></script>
 
         <!-- Custom JS scripts -->
 
